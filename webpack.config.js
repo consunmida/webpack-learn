@@ -19,6 +19,43 @@ const TerserPlugin = require('terser-webpack-plugin'); //压缩js
  *  抽离公共代码 optimize 配置splitChunks 或者commonChunks
  * 懒加载 使用import 安装babel插件
  * **********/ 
+ 
+ 
+ /***********
+ https://stackoverflow.com/questions/44096749/webpack-load-images-from-inline-style-background-image
+ {
+        test: /\.html$/i,
+        use: [
+          {
+            loader: 'html-loader',
+            options: {
+              interpolate: true, //页面使用内联css样式的background 图片
+            },
+          },
+        ],
+      },
+ 
+ **********/
+ 
+  
+ /***********
+ 
+ https://stackoverflow.com/questions/59070216/webpack-file-loader-outputs-object-module
+ {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader', // 或者url-loader
+            options: {
+              esModule: false, //解决使用file-loader 页面使用'./images'这种路径 压缩出 [object module]
+            },
+          },
+        ],
+      },
+ 
+ **********/
+ 
+
 
 //babel
 module.exports = {
