@@ -54,6 +54,36 @@ const TerserPlugin = require('terser-webpack-plugin'); //压缩js
       },
  
  **********/
+
+ /*****************
+  * 
+  * 关于 hash 稳定性的坑
+
+注意区分
+
+[hash] ： 整个项目有变动时，hash 变化。
+[chunkhash] ： chunk 有变动，chunkhash 变化
+[contenthash] ： 目前文档没有明确定义和说明，但是和文件内容的变化相关
+
+
+在分离 js 和 css 时，都用设置 contenthash.
+
+  output: {
+    path: path.resolve(__dirname, '../dist'),
+    filename: 'static/js/[name].[contenthash:8].js',
+    publicPath: '/'
+  },
+    new MiniCssExtractPlugin({
+      filename: 'static/css/[name].[contenthash:8].css'
+    }),
+配置js的文件名时，之前webpack3都是用chunkhash也没问题，但是实践后发现webpack4中用chunkhash，会导致，修改css时引发js的chunkhash变化，从而缓存失效。
+经测试这样的设置，的确可以分离打包，并且各自的 hash 值互相不会干扰，如果有问题的话，可以共同讨论
+  * 
+  * 
+  * 
+  * 
+  * 
+  * ************ */
  
 
 
